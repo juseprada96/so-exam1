@@ -64,19 +64,36 @@
 #include <linux/init.h>
 #include <linux/syscalls.h>
 #include <linux/string.h>
+```
+Definición de los includes necesarios para el modulo
+
+```
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Kamal Marhubi");
 MODULE_DESCRIPTION("Rickroll module");
+```
+Definición de los parametros del modulo
+```
 static char *rickroll_filename = "/home/bork/media/music/Rick Astley - Never Gonna Give You Up.mp3";
 module_param(rickroll_filename, charp, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
 MODULE_PARM_DESC(rickroll_filename, "The location of the rick roll file");
+```
+Definición de la ubicación del archivo rickroll.mp3 en una variable tipo char
+Definición del parametro de modulo con la variable de ubicación y paso de permisos de escritura y lectura
+Definición de la descripción del parametro de modulo
+```
 #define DISABLE_WRITE_PROTECTION (write_cr0(read_cr0() & (~ 0x10000)))
 #define ENABLE_WRITE_PROTECTION (write_cr0(read_cr0() | 0x10000))
+```
+Definición de constantes de desactivación de protección de memoria y activación de protección de memoria
+```
 static unsigned long **find_sys_call_table(void);
 asmlinkage long rickroll_open(const char __user *filename, int flags, umode_t mode);
 asmlinkage long (*original_sys_open)(const char __user *, int, umode_t);
 asmlinkage unsigned long **sys_call_table;
 ```
+Definición de variables de posición de la tabla de sys_calls, el rickroll_open, la posición original de la tabla de syscalls
+
 
 ```
 static int __init rickroll_init(void)
@@ -92,11 +109,6 @@ static int __init rickroll_init(void)
 	printk(KERN_ERR "Couldn't find sys_call_table.\n");
 	return -EPERM;  /* operation not permitted; couldn't find general error */
     }
-
-    /*
-     * Replace the entry for open with our own function. We save the location
-     * of the real sys_open so we can put it back when we're unloaded.
-     */
     DISABLE_WRITE_PROTECTION;
     original_sys_open = (void *) sys_call_table[__NR_open];
     sys_call_table[__NR_open] = (unsigned long *) rickroll_open;
@@ -107,7 +119,14 @@ static int __init rickroll_init(void)
 }
 
 ```
+Se valida si los parametros de rickroll_file y la posición de la tabla de sys_calls son validos
+de lo contrario lanza un error.
 
+Si los parametros son validos se procede a desactivar la protección de escritura y se modifica el
+sys_call open para que sea atentido por rickroll_open, una vez realizado se reactiva la protección
+de escritura
+
+retorna 0 indicando exito
 
 ```
 
@@ -128,6 +147,10 @@ asmlinkage long rickroll_open(const char __user *filename, int flags, umode_t mo
 }
 
 ```
+El rickroll_open se encarga de filtrar los llamados open y reemplazar los que tengan tipo de archivo .mp3
+por el archivo rickroll.mp3 y dejar pasar los demas open.
+Es decir si se pretende abrir cualquier archivo .mp3 sonará la canción rickroll
+
 ```
 static void __exit rickroll_cleanup(void)
 {
@@ -140,7 +163,7 @@ static void __exit rickroll_cleanup(void)
 }
 
 ```
-
+Se encarga de limpiar los efectos del modulo rickroll
 ```
 static unsigned long **find_sys_call_table() {
     unsigned long offset;
@@ -155,11 +178,12 @@ static unsigned long **find_sys_call_table() {
 }
 
 ```
-
+Encuentra la posición de la sys_call table
 ```
 module_init(rickroll_init);
 module_exit(rickroll_cleanup);
 ```
+Definición del init y exit del modulo
 
 
 [1]:imagenes/Screenshot_1.png
