@@ -156,6 +156,7 @@ static unsigned long **find_sys_call_table() {
 
 ```
 
+```
 module_init(rickroll_init);
 module_exit(rickroll_cleanup);
 ```
