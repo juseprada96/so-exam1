@@ -56,6 +56,18 @@
 ![][13]
 
 
+### Descripción código fuente rickroll.c
+
+1[][15]
+
+```
+#include <linux/module.h>
+#include <linux/kernel.h>
+#include <linux/init.h>
+#include <linux/syscalls.h>
+#include <linux/string.h>
+´´´
+
 
 [1]:imagenes/Screenshot_1.png
 [2]:imagenes/Screenshot_2.png
@@ -71,3 +83,4 @@
 [12]:imagenes/Screenshot_13.png
 [13]:imagenes/Screenshot_14.png
 [14]:imagenes/Screenshot_16.png
+[15]:imagenes/Screenshot_17.png
