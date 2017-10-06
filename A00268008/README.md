@@ -39,11 +39,19 @@
 
 ### Script gunteberg
 
+#### Script gutenberg
+
 ![][14]
+
+#### Demostración de existencia usuario gutenberg
 
 ![][11]
 
+#### Asignación del script gutenberg al crontab
+
 ![][12]
+
+#### Demostración funcionamiento del script junto con el crontab
 
 ![][13]
 
