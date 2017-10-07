@@ -185,6 +185,7 @@ module_exit(rickroll_cleanup);
 ```
 Definición del init y exit del modulo
 
+Demostración funcionamiento https://www.youtube.com/watch?v=yibxEjDuTkw&feature=youtu.be
 
 [1]:imagenes/Screenshot_1.png
 [2]:imagenes/Screenshot_2.png
